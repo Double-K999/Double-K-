@@ -7,6 +7,9 @@ echo   Double K 个人网站 - 本地预览
 echo ============================================
 echo.
 
+netstat -ano | findstr "LISTENING" | findstr ":5173" >nul 2>nul
+if not errorlevel 1 goto already
+
 set "NODE="
 where node >nul 2>nul && set "NODE=node"
 if not defined NODE if exist "%USERPROFILE%\.dsh\dsh-runtimes\dsh-primary-runtime\dependencies\node\bin\node.exe" set "NODE=%USERPROFILE%\.dsh\dsh-runtimes\dsh-primary-runtime\dependencies\node\bin\node.exe"
@@ -14,6 +17,12 @@ if not defined NODE goto nonode
 
 if not exist "node_modules" goto installdeps
 goto start
+
+:already
+echo 预览已经在运行，正在打开浏览器...
+start "" http://localhost:5173
+timeout /t 2 >nul
+exit /b 0
 
 :nonode
 echo [错误] 没找到 Node.js。
@@ -25,9 +34,8 @@ exit /b 1
 :installdeps
 echo 第一次运行，正在安装依赖，可能要 1-3 分钟...
 echo.
-set "PNPM="
-where pnpm >nul 2>nul && set "PNPMOK=1"
-if defined PNPMOK (
+where pnpm >nul 2>nul
+if not errorlevel 1 (
   call pnpm install
 ) else (
   "%NODE%" "%USERPROFILE%\.dsh\dsh-runtimes\dsh-primary-runtime\dependencies\pnpm\bin\pnpm.mjs" install
@@ -43,11 +51,12 @@ exit /b 1
 
 :start
 echo.
-echo 正在启动，浏览器会自动打开 http://localhost:5173
+echo 正在启动，稍等两秒浏览器会自动打开。
 echo 改代码保存后页面会自动刷新。
 echo.
-echo >>> 关掉这个黑窗口 = 停止预览 <<<
+echo 【 关掉这个黑窗口 = 停止预览 】
 echo.
-start "" http://localhost:5173
-"%NODE%" "node_modules\vite\bin\vite.js"
+"%NODE%" "node_modules\vite\bin\vite.js" --port 5173 --strictPort --open
+echo.
+echo 预览已停止。
 pause
