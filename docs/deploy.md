@@ -32,15 +32,22 @@ pnpm dlx wrangler pages deploy dist --project-name=double-k
 
 约 1 分钟出新版本，`double-k-35s.pages.dev` 立刻生效。
 
-### B. 走 Git 自动构建（推荐长期用）
+### B. 走 Git 自动构建（推荐长期用，已打通）
 
-仓库 `github.com/Double-K999/Double-K-` 现在**还是空的**（只有 `.gitattributes`）。
-本地已经重建好一个正确的仓库并提交了（`56d75e3`，187 个文件），只差 push：
+仓库 `github.com/Double-K999/Double-K-` 已经推上去了（HEAD `c0cec4f`，189 个文件），Cloudflare 每次收到 `main` 的新提交会自动构建 + 部署，实测一次约 20 秒。
 
-1. 打开 GitHub Desktop → Add local repository → 选 `D:\Double K 个人网站`
-2. Push origin
+日常流程就三步：
 
-推成功后，Cloudflare 每次收到 `main` 的新提交就会自动构建。构建配置应是：
+```sh
+git add -A
+git commit -m "update"
+git push        # Cloudflare 自动构建
+```
+
+> 本机 git 在 `C:\Users\administered\AppData\Local\GitHubDesktop\app-3.6.10\resources\app\git\cmd\git.exe`，
+> 并且已经配好 `http.proxy = 127.0.0.1:7890`（直连 github.com 会被重置）。
+
+构建配置（已核对，无需改动）：
 
 | 项 | 值 |
 | --- | --- |
