@@ -104,11 +104,22 @@ pip install fonttools brotli
 
 ```
 ✅ 环境：Node v22.x / Git x.x / pnpm x.x
-✅ 仓库：D:\Double-K-（已装依赖）
+✅ 仓库：D:\Double-K-（绝对路径，已装依赖）
 ✅ 预览：http://localhost:5173 正常打开
 ⚠️ 遇到：<如果有，一句话说明怎么解决的>
-下一步：改完内容后，关掉预览窗口，我再帮你发布
+下一步：后续对话请在 D:\Double-K- 这个目录里开，我才能读到 AGENTS.md / docs/
 ```
+
+**必须把仓库的绝对路径写清楚**，并提醒用户：之后的对话要在这个目录里打开工具，否则读不到 `AGENTS.md`、`docs/`、`src/`。
+
+## 收尾自检（别跳过）
+
+```powershell
+cd <仓库路径>
+Test-Path AGENTS.md, docs\status.md, docs\skills\publish.md, src\content.js
+```
+
+四个都要返回 `True`。只要有一个 False，说明克隆不完整或目录不对，**现在就修**——否则用户下一步说「读 AGENTS.md」时会失败。
 
 ## 常见故障对照
 
@@ -120,3 +131,4 @@ pip install fonttools brotli
 | `pnpm install` 报 EACCES/EPERM | 文件被占用：关掉编辑器/杀毒扫描后重试 |
 | 5173 被占用 | `pnpm dev --port 5174`，或先关掉旧进程 |
 | 页面文字明显变细/字形不对 | 没跑字体子集，见 `scripts/subset-font.py` |
+| 用户说「读不到 AGENTS.md」 | 工具的工作目录不在仓库根：`cd` 进去重开，或直接用绝对路径 `D:\Double-K-\AGENTS.md` |
