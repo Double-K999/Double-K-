@@ -1,4 +1,4 @@
-@font-face{font-family:"Tencent Sans";src:url("/fonts/tencent-sans-w7.ttf") format("truetype");font-weight:700;font-style:normal;font-display:swap;ascent-override:90%;descent-override:20%;line-gap-override:0%}
+@font-face{font-family:"Tencent Sans";src:url("/fonts/tencent-sans-w7.woff2") format("woff2");font-weight:700;font-style:normal;font-display:swap;ascent-override:90%;descent-override:20%;line-gap-override:0%}
 /* 棣栧睆鎵嬪啓绛惧悕锛歋acramento锛圫IL Open Font License 1.1锛孡atin 瀛愰泦 24KB锛?*/
 @font-face{font-family:"Signature";src:url("/fonts/sacramento-latin-400.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
 :root{--font-family:"Tencent Sans","TencentSans W7","鑵捐浣?W7",sans-serif;font-family:var(--font-family);color:#edeceb;background:#000;font-synthesis:none;font-weight:400;--accent-orange:#f47716;--accent-orange-bright:#ff9a3d;--muted:#81847d;--line:#ffffff20;--max:1700px;--gutter:clamp(28px,5.2vw,100px)}

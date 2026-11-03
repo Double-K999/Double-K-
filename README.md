@@ -68,7 +68,7 @@ artifacts/            Playwright 回归脚本与截图（不参与构建）
 - `public/images/study-hud.svg`、`study-flow.svg`、`study-rings.svg`：首屏胶卷用的三张概念视觉，同样是占位素材。
 - `public/images/portrait.webp`：个人介绍区块的本人照片（830×1012，59KB）；换照片只改 `src/content.js` 的 `about.photo`。
 - `public/images/designer.svg`：早期的人物插画，现在只用在首屏作品胶卷里。
-- `public/media/hero.mp4`：首屏右侧的循环动态画面（512×594 / 9.4s / 1.15MB），`public/images/hero-reel-poster.webp` 是它的海报帧。`public/media/orbit.webm` 已不再引用，可删。
+- `public/media/hero.mp4`：首屏右侧的循环动态画面（512×594 / 9.4s / 1.15MB），`public/images/hero-reel-poster.webp` 是它的海报帧。
 - `public/images/strip/*.webp`：首屏底部胶卷的 10 张作品缩略图（560×267），从 `public/case/` 的原页裁切而来。
 - `public/resume-li-xukun.pdf`：下载简历文件。
 - `public/case/pubg/p04–p37.webp`（34 页）+ `public/case/blood/p03–p33.webp`（31 页）+ `public/case/enter-battle/p01–p13.webp`（13 页）+ `public/case/yiche/p04–p24.webp`（21 页）+ `public/case/anheng/p26–p40.webp`（15 页）+ `public/case/netease-fps/p42–p55.webp`（14 页）：二级界面里两个项目各自的作品集案例页，分别来自两份 PDF。**PDF 更新后**重跑 `python scripts/build-case.py`（用法见脚本头部注释）；若页码范围变了，同步改 `content.js` 里 `case.pages` 的生成范围与 `case.sections` 的跳转页码。
@@ -89,4 +89,4 @@ artifacts/            Playwright 回归脚本与截图（不参与构建）
 
 三个回归脚本用系统 Chrome + DSH 运行时里的 Playwright 运行，普通开发与构建不需要它们。
 
-正文字体使用用户提供的腾讯体 W7，文件为 `public/fonts/tencent-sans-w7.ttf`，通过 `@font-face` 本地加载；当前压缩包仅包含 W7 字重。首屏签名 `LiXuKun` 使用 Sacramento（SIL Open Font License 1.1），Latin 子集 woff2 位于 `public/fonts/sacramento-latin-400.woff2`，同样本地自托管。图标来自 Lucide。
+正文字体使用用户提供的腾讯体 W7，已裁剪成只含站点实际用字的 `public/fonts/tencent-sans-w7.woff2`（**129 KB**，原始 TTF 7958 KB），通过 `@font-face` 本地加载。原始 TTF 放在 `assets/fonts-src/`（不参与部署），改文案后跑 `python scripts/subset-font.py` 重新裁剪。首屏签名 `LiXuKun` 使用 Sacramento（SIL Open Font License 1.1），Latin 子集 woff2 位于 `public/fonts/sacramento-latin-400.woff2`，同样本地自托管。图标来自 Lucide。
