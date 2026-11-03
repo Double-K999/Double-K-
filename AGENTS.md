@@ -2,6 +2,20 @@
 
 > 给接手这个项目的 AI 工具（Codex / Claude Code / Cursor / Copilot 等）和人看的交接说明。先读这一页再动手。
 
+## 从零开始（新电脑）
+
+```sh
+# 1) 装 Node 22 / pnpm / Git（Windows: winget install OpenJS.NodeJS.LTS Git.Git；pnpm 用 corepack enable）
+# 2) 拉代码
+git clone https://github.com/Double-K999/Double-K-.git
+cd Double-K-
+pnpm install
+pnpm dev                # http://localhost:5173
+```
+
+可选依赖：改文案要 `pip install fonttools brotli`；跑回归要 `pnpm add -D playwright && npx playwright install chromium`。
+国内网络连不上 GitHub 时：`git config --global http.proxy http://127.0.0.1:7890`
+
 ## 一句话
 
 Double K（李旭昆）的游戏交互设计作品集。React 19 + Vite 7 单页站，纯静态，已上线。
