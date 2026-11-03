@@ -127,4 +127,75 @@ git add -A && git commit -m "重新裁剪字体" && git push
 | 图片、字体 404 | 部署路径不对（子路径部署要配 `base`） |
 | 需要回退 | Deployments 里任意历史版本 → `⋯` → Rollback |
 
+---
+
+## 附：完全新手版（Windows，一步一步）
+
+### 0. 先想清楚你要做什么
+
+| 你要做的 | 要不要装环境 |
+| --- | --- |
+| 只改文字、链接、联系方式 | **不用装**，用「场景 B」的 GitHub 网页改法，改完自动上线 |
+| 换图片、调版式、要本地预览 | 要装，按下面 1–6 步走 |
+
+### 1. 装 Node.js（网页的运行引擎）
+
+打开 **https://nodejs.org** → 下载 **LTS（22.x）** → 双击安装包 → 一路「下一步」。
+
+验证：开始菜单搜 **PowerShell** 打开，输入 `node -v`，显示 `v22.x.x` 就成。
+
+### 2. 装 Git（和 GitHub 同步的工具）
+
+打开 **https://git-scm.com/download/win** → 一路「下一步」（默认选项就行）。
+
+验证：`git --version`
+
+### 3. 启用 pnpm（下载代码依赖的工具）
+
+```powershell
+corepack enable
+```
+
+验证：`pnpm -v`（显示版本号即可；没装 Node 这步会失败，先做第 1 步）
+
+### 4. 把项目下载到本地
+
+```powershell
+cd D:\
+git clone https://github.com/Double-K999/Double-K-.git
+cd Double-K-
+```
+
+第一次会下载约 18MB，等它跑完。
+
+### 5. 装依赖 + 本地预览
+
+```powershell
+pnpm install     # 第一次 1~3 分钟
+pnpm dev         # 出现 http://localhost:5173 就好了
+```
+
+浏览器打开那个地址 = 本地版网站。改代码会自动刷新；要停止按 `Ctrl + C`。
+
+### 6. 改完发布
+
+```powershell
+git add -A
+git commit -m "改了什么"
+git push
+```
+
+第一次 push 会弹 GitHub 登录窗口，登录一次即可；之后 20 秒左右线上更新。
+
+### 常见卡点
+
+| 现象 | 原因 / 解决 |
+| --- | --- |
+| `node : 无法将"node"项识别为…` | Node 没装好，或装完没重开终端 |
+| `pnpm : 无法识别` | 没做 `corepack enable`，或终端没重开 |
+| `git clone` 卡住 / `Connection reset` | 网络问题，配代理：`git config --global http.proxy http://127.0.0.1:7890` |
+| push 时要求登录 | 正常，登录一次 GitHub 账号 |
+| 页面文字变细、字形不对 | 忘了跑 `python scripts/subset-font.py` |
+
+
 更多细节：[`deploy.md`](deploy.md)（部署）、[`status.md`](status.md)（改动记录）。
