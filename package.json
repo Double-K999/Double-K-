@@ -1,0 +1,9 @@
+{
+  "name": "double-k-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": { "dev": "vite --host 0.0.0.0", "build": "vite build", "preview": "vite preview --host 0.0.0.0" },
+  "dependencies": { "react": "^19.1.1", "react-dom": "^19.1.1", "lucide-react": "^0.468.0", "@fontsource/barlow-condensed": "^5.2.0", "@fontsource/dm-sans": "^5.2.0" },
+  "devDependencies": { "vite": "^7.1.7", "@vitejs/plugin-react": "^5.0.4" }
+}
