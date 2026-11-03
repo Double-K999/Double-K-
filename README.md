@@ -1,5 +1,7 @@
 # Double K · 李旭昆 · 游戏交互设计作品集
 
+> 线上地址：**https://double-k-35s.pages.dev/** · 部署说明见 [docs/deploy.md](docs/deploy.md)
+
 React + Vite 单页作品集，包含全屏动态首页、个人介绍与经历、项目卡片、全屏项目详情、设计能力和联系页。桌面版最大内容宽度为 1700px，并适配平板与手机。
 
 > 本工程由 Codex 产出的半成品承接而来。接手时的现状、已知问题与下一步计划见 [`docs/status.md`](docs/status.md)。
