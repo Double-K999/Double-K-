@@ -1,5 +1,7 @@
 # 接手现状（2026-10-27）
 
+> **本文件是改动史（从 2026-10-27 起按时间记录）。2026-11-03 之后的现状请看 [`AGENTS.md`](../AGENTS.md)：项目已上线 Cloudflare Pages、已建 Git 仓库、字体已子集化、首屏视频已替换。**
+
 ## 一、工程在哪里
 
 | 项目 | 位置 |
@@ -190,29 +192,32 @@ BLOOD STRIKE 取的 03–33 页正好覆盖该 PDF 的第 01 章（核心体验�
 - 动效降级：`prefers-reduced-motion: reduce` 下背景视频隐藏、胶卷与星芒动画停止、`scroll-behavior` 回退为 auto。
 - `vite build` 通过：CSS 38.9KB（gzip 8.9KB）、JS 249KB（gzip 78.7KB）。
 
-## 六、已知问题（按优先级）
+## 六、已知问题（2026-11-03 复核）
 
-### P1 — 影响观感或上线
+### 已解决
 
-1. **素材仍是占位**：项目封面 2 张、流程示意 1 张、新增的 `study-hud.svg` / `study-flow.svg` / `study-rings.svg` 3 张，以及首屏胶卷里的 `designer.svg` / `hero-poster.jpg`，都是概念视觉。真实项目截图到位后，改 `src/content.js` 与 `src/App.jsx` 顶部的 `stripTiles` 即可。（个人介绍区的照片已换成本人实拍。）
-2. **字体 7.96MB 未子集化**：首屏要下近 8MB TTF（`font-display:swap` 会先闪系统字体）。建议子集化成 woff2，通常能压到 200–400KB。
-3. **背景视频自带角标文字被裁掉半截**：`orbit.webm` 右下角烘焙了 `UX / HUMAN-CENTERED SYSTEM` 字样，`object-fit:cover` 后在首屏底缘露出半行。需要重新导出视频或加更强的底部渐隐。
-4. **分享图不是标准比例**：现在用 `hero-poster.jpg`（1600×1000）充当 OG 图，理想是单独做一张 1200×630，并把 `og:url` / `og:image` 换成线上绝对地址。
-5. **项目卡片里 `<button>` 套了 `<div>/<h3>/<p>`**：`button` 只允许 phrasing content，这是无效嵌套，读屏会把整张卡片连读成一个按钮名。建议改 `article` + 卡内单一链接/按钮。
+- ~~字体 7.96MB 未子集化~~ → 已裁成 `public/fonts/tencent-sans-w7.woff2`（**129KB / 751 字形**），源 TTF 移到 `assets/fonts-src/`（不部署），重裁脚本 `scripts/subset-font.py`
+- ~~无版本控制~~ → GitHub 仓库 + Cloudflare Pages 自动部署已打通（push main 即上线）
+- ~~`orbit.webm` 角标文字~~ → 首屏换成 `public/media/hero.mp4`，`orbit.webm` 已删除
+- ~~首屏胶卷是占位 SVG~~ → 已换成 10 张真实作品页裁图（`public/images/strip/`）
+
+### 仍待处理（按优先级）
+
+1. **简历 PDF 2.09MB**：比所有图片都大，可压缩或降采样
+2. **OG 分享图**：仍是 `hero-poster.jpg`（1600×1000），理想 1200×630，且 `og:url` / `og:image` 应换成线上绝对地址
+3. **项目卡片语义**：`<button>` 内嵌 `<h3>/<p>` 属无效嵌套，读屏会把整张卡连读成一个按钮名
+4. **无用占位素材**：`public/images/` 下 `study-*.svg`、`designer.svg`、`project-*.svg` 已不在首屏使用，可删
+5. **短屏机型**：首屏 `min-height:770px`（≤1100）/`700px`（≤760），568/640 高的机型上胶卷会落到折线以下
 
 ### P2 — 维护性
 
-6. **CSS 仍是两套来源**：`styles.css` 负责布局（hero 区块已可读，其余仍是压缩单行），`ui.css` 负责组件；两者会互相覆盖，改控件尺寸前先确认改在哪个文件。
-7. **无版本控制**：本机没有 Git。建议装 Git 后 `git init`，或每次改版前压一份快照。
-8. **简历 PDF 2.1MB**：可压缩图片或降采样。
-9. **旧文件**：`verify-wandering-preview.cjs` 是上一个项目遗留，可删；`artifacts/*.png` 可随时重生成。
-10. **短屏机型**：首页 `min-height:770px`（≤1100）/`700px`（≤760），在 568/640 高的机型上会高于视口，胶卷落到折线以下（无重叠、CTA 仍可见）。
+- `styles.css` 除首屏外仍是压缩单行，可按区块展开
+- `verify-wandering-preview.cjs` 是上一个项目遗留，可删
+- `styles.css` 与 `ui.css` 的层叠关系仍靠约定维持（后者覆盖前者），改动前先 grep
 
 ## 七、建议的下一步
 
-1. 换真实素材：项目封面、过程图、本人照片、简历压缩 → 顺带删掉胶卷里的占位图。
-2. 字体子集化 + 视频角标处理，把首屏资源从 ~9MB 降到 1MB 级别。
-3. 做 1200×630 分享图，补 `og:url`，上线前跑一次社交预览调试。
-4. 项目卡片语义化改造（`button` → `article` + 链接）。
-5. `styles.css` 剩余压缩块按区块展开，删掉确认无用的死规则。
-6. 装 Git，之后每次改版一个提交；上线前跑 `artifacts/` 下三个回归脚本。
+1. 补第 4 个游戏产品作品：`workGroups` 的 `items` 加 id、`slots` 减一
+2. 压缩简历 PDF、换 1200×630 分享图
+3. 项目卡片语义化改造（`article` + 单一可点区域）
+4. 清理 `public/images/` 里不再引用的 SVG，减小仓库体积
