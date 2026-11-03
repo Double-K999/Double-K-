@@ -16,6 +16,10 @@ pnpm dev                # http://localhost:5173
 可选依赖：改文案要 `pip install fonttools brotli`；跑回归要 `pnpm add -D playwright && npx playwright install chromium`。
 国内网络连不上 GitHub 时：`git config --global http.proxy http://127.0.0.1:7890`
 
+## 现成的技能包
+
+`docs/skills/setup-windows.md`（装环境）和 `docs/skills/publish.md`（发布）是可以直接执行的技能说明；用户提到「装环境」「发布」时优先按它们走。
+
 ## 一句话
 
 Double K（李旭昆）的游戏交互设计作品集。React 19 + Vite 7 单页站，纯静态，已上线。
